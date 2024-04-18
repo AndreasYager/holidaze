@@ -1,0 +1,41 @@
+/* Header.css */
+
+.header-navbar {
+  background-color: #ff6800;
+  position: relative;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0;
+}
+
+.navbar-toggler img {
+  height: 50px;
+  width: auto;
+}
+
+.navbar-brand img {
+  height: 70px;
+  width: auto;
+}
+
+header img {
+  cursor: pointer;
+}
+
+.search-bar-container {
+  background-color: #ed4a34;
+  padding: 20px;
+  width: 100%;
+}
+
+.search-bar-container input {
+  width: 70%;
+  margin-left: 15%;
+}
+
+.menu-logo-container {
+  display: flex;
+  align-items: center;
+}
