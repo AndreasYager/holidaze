@@ -4,6 +4,7 @@ import "./Header.css";
 import logo from "../../images/holidazelogo.png";
 import userIcon from "../../images/holidazeprofile.png";
 import hamburgerIcon from "../../images/hamburgericon.png";
+import Search from "../../Search";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,11 +44,7 @@ const Header = () => {
         </button>
       </Navbar>
       <div className="search-bar-container">
-        <input
-          type="text"
-          placeholder="Search anywhere in the world..."
-          className="form-control"
-        />
+        <Search />
       </div>
       <Collapse
         isOpen={isMenuOpen}

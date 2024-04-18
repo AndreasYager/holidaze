@@ -30,11 +30,6 @@ header img {
   width: 100%;
 }
 
-.search-bar-container input {
-  width: 70%;
-  margin-left: 15%;
-}
-
 .menu-logo-container {
   display: flex;
   align-items: center;
