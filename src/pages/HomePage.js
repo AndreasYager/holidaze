@@ -1,27 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Venue from "../components/venue/Venue";
 import { Container, Row, Col } from "reactstrap";
+import { fetchVenues } from "../api/venueApi"; 
 
 const HomePage = () => {
   const [venues, setVenues] = useState([]);
 
   useEffect(() => {
-    const fetchVenues = async () => {
-      try {
-        const response = await fetch(
-          "https://v2.api.noroff.dev/holidaze/venues"
-        ); // Adjust this URL to your API
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const json = await response.json();
-        setVenues(json.data);
-      } catch (error) {
-        console.error("Failed to fetch venues:", error);
-      }
+    const initFetch = async () => {
+      const venuesData = await fetchVenues();
+      setVenues(venuesData);
     };
-
-    fetchVenues();
+    initFetch();
   }, []);
 
   return (
