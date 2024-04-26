@@ -1,7 +1,7 @@
 /* Header.css */
 
 .header-navbar {
-  background-color: #ff6800;
+  background-color: #ff6767;
   position: relative;
 }
 
@@ -25,7 +25,7 @@ header img {
 }
 
 .search-bar-container {
-  background-color: #ed4a34;
+  background-color: #708d6c;
   padding: 20px;
   width: 100%;
 }
