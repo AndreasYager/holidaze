@@ -1,57 +1,64 @@
-import React, { useState } from "react";
-import { Navbar, Collapse, Nav, NavItem, NavLink } from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { Collapse, Navbar, Nav, NavItem, NavLink, NavbarToggler, Button } from "reactstrap";
 import "./Header.css";
 import logo from "../../images/holidazelogo.png";
 import userIcon from "../../images/holidazeprofile.png";
 import hamburgerIcon from "../../images/hamburgericon.png";
 import Search from "../../Search";
+import AuthModal from "../AuthModal";
+import { logoutUser } from "../../api/authApi";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
+  const handleLogout = async () => {
+    const { success, message } = await logoutUser();
+    if (success) {
+      setIsLoggedIn(false);
+
+    } else {
+      console.error("Logout failed:", message);
+
+    }
   };
-
-  const toggleProfile = () => {
-    setIsProfileOpen(!isProfileOpen);
+  const updateLoginStatus = (status) => {
+    setIsLoggedIn(status);
+    if (status) {
+      toggleModal();  // Close modal on successful login
+    }
   };
 
   return (
     <div>
       <Navbar className="header-navbar">
         <div className="menu-logo-container">
-          <button
-            className="navbar-toggler"
-            aria-label="Toggle navigation"
-            onClick={toggleMenu}
-            tabIndex="0"
-          >
+          <NavbarToggler onClick={toggleMenu} className="me-2">
             <img src={hamburgerIcon} alt="Menu" />
-          </button>
+          </NavbarToggler>
           <a href="/" className="navbar-brand">
             <img src={logo} alt="Holidaze Logo" />
           </a>
         </div>
-        <button
-          className="navbar-toggler"
-          aria-label="User profile"
-          onClick={toggleProfile}
-          tabIndex="0"
-        >
-          <img src={userIcon} alt="User Icon" />
-        </button>
+        <NavbarToggler onClick={toggleModal} className="me-2">
+          <img src={userIcon} alt="User Icon" style={{ border: 'none' }} />
+        </NavbarToggler>
       </Navbar>
       <div className="search-bar-container">
         <Search />
       </div>
-      <Collapse
-        isOpen={isMenuOpen}
-        navbar
-        className={`menu-collapse ${isMenuOpen ? "open" : ""}`}
-      >
-        <Nav navbar>
+      <Collapse isOpen={isMenuOpen} navbar>
+        <Nav className="me-auto" navbar>
           <NavItem>
             <NavLink href="/">Home</NavLink>
           </NavItem>
@@ -59,24 +66,15 @@ const Header = () => {
             <NavLink href="/dummy">Link 1</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/#">Link 2</NavLink>
+            {isLoggedIn ? (
+              <Button color="link" onClick={handleLogout}>Logout</Button>
+            ) : (
+              <Button color="link" onClick={toggleModal}>Login</Button>
+            )}
           </NavItem>
         </Nav>
       </Collapse>
-      <Collapse
-        isOpen={isProfileOpen}
-        navbar
-        className={`profile-collapse ${isProfileOpen ? "open" : ""}`}
-      >
-        <Nav navbar>
-          <NavItem>
-            <NavLink href="#">Profile Settings</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">Log Out</NavLink>
-          </NavItem>
-        </Nav>
-      </Collapse>
+      <AuthModal isOpen={isModalOpen} toggle={toggleModal} isLogin={isLogin} setIsLogin={setIsLogin} updateLoginStatus={updateLoginStatus} />
     </div>
   );
 };
