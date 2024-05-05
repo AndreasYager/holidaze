@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Collapse, Navbar, Nav, NavItem, NavLink, NavbarToggler, Button } from "reactstrap";
+import {
+  Collapse,
+  Navbar,
+  Nav,
+  NavItem,
+  NavLink,
+  NavbarToggler,
+  Button,
+} from "reactstrap";
+import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import logo from "../../images/holidazelogo.png";
 import userIcon from "../../images/holidazeprofile.png";
@@ -13,11 +22,20 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     setIsLoggedIn(!!token);
   }, []);
+
+  const handleProfileAccess = () => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      navigate("/profile");
+    } else {
+      toggleModal();
+    }
+  };
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -26,16 +44,14 @@ const Header = () => {
     const { success, message } = await logoutUser();
     if (success) {
       setIsLoggedIn(false);
-
     } else {
       console.error("Logout failed:", message);
-
     }
   };
   const updateLoginStatus = (status) => {
     setIsLoggedIn(status);
     if (status) {
-      toggleModal();  // Close modal on successful login
+      toggleModal();
     }
   };
 
@@ -50,8 +66,8 @@ const Header = () => {
             <img src={logo} alt="Holidaze Logo" />
           </a>
         </div>
-        <NavbarToggler onClick={toggleModal} className="me-2">
-          <img src={userIcon} alt="User Icon" style={{ border: 'none' }} />
+        <NavbarToggler onClick={handleProfileAccess} className="me-2">
+          <img src={userIcon} alt="User Icon" style={{ border: "none" }} />
         </NavbarToggler>
       </Navbar>
       <div className="search-bar-container">
@@ -62,19 +78,31 @@ const Header = () => {
           <NavItem>
             <NavLink href="/">Home</NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink href="/dummy">Link 1</NavLink>
+          <NavItem onClick={handleProfileAccess}>
+            {" "}
+            <NavLink style={{ cursor: "pointer" }}>My Profile</NavLink>
           </NavItem>
+
           <NavItem>
             {isLoggedIn ? (
-              <Button color="link" onClick={handleLogout}>Logout</Button>
+              <Button color="link" onClick={handleLogout}>
+                Logout
+              </Button>
             ) : (
-              <Button color="link" onClick={toggleModal}>Login</Button>
+              <Button color="link" onClick={toggleModal}>
+                Login
+              </Button>
             )}
           </NavItem>
         </Nav>
       </Collapse>
-      <AuthModal isOpen={isModalOpen} toggle={toggleModal} isLogin={isLogin} setIsLogin={setIsLogin} updateLoginStatus={updateLoginStatus} />
+      <AuthModal
+        isOpen={isModalOpen}
+        toggle={toggleModal}
+        isLogin={isLogin}
+        setIsLogin={setIsLogin}
+        updateLoginStatus={updateLoginStatus}
+      />
     </div>
   );
 };
