@@ -57,6 +57,11 @@ export async function loginUser(email, password) {
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("userName", data.name);
       localStorage.setItem("userEmail", data.email);
+      localStorage.setItem(
+        "isVenueManager",
+        data.venueManager ? "true" : "false"
+      );
+
       if (data.avatar) {
         localStorage.setItem("userAvatarUrl", data.avatar.url);
         localStorage.setItem("userAvatarAlt", data.avatar.alt);
