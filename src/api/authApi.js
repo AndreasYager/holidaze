@@ -92,6 +92,7 @@ export async function logoutUser() {
     localStorage.removeItem("userBannerUrl");
     localStorage.removeItem("userBannerAlt");
     localStorage.removeItem("userEmail");
+    localStorage.removeItem("isVenueManager");
     return { success: true };
   } catch (error) {
     console.error("Logout failed:", error.message);
