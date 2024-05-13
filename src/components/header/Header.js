@@ -20,20 +20,37 @@ import { logoutUser } from "../../api/authApi";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isVenueManager, setIsVenueManager] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
+    const venueManager = localStorage.getItem("isVenueManager") === "true";
     setIsLoggedIn(!!token);
+    setIsVenueManager(venueManager);
   }, []);
 
   const handleProfileAccess = () => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
+    if (isLoggedIn) {
       navigate("/profile");
     } else {
       toggleModal();
+    }
+  };
+
+  const handleVenueManagerAccess = () => {
+    if (isLoggedIn && isVenueManager) {
+      navigate("/venuemanager"); 
+    } else if (isLoggedIn && !isVenueManager) {
+      
+      alert(
+        "You are not currently set as a venue manager. Please visit your profile page to update your status."
+      );
+      navigate("/profile"); 
+    } else {
+      toggleModal(); 
     }
   };
 
@@ -44,10 +61,12 @@ const Header = () => {
     const { success, message } = await logoutUser();
     if (success) {
       setIsLoggedIn(false);
+      setIsVenueManager(false);
     } else {
       console.error("Logout failed:", message);
     }
   };
+
   const updateLoginStatus = (status) => {
     setIsLoggedIn(status);
     if (status) {
@@ -79,10 +98,13 @@ const Header = () => {
             <NavLink href="/">Home</NavLink>
           </NavItem>
           <NavItem onClick={handleProfileAccess}>
-            {" "}
             <NavLink style={{ cursor: "pointer" }}>My Profile</NavLink>
           </NavItem>
-
+          <NavItem onClick={handleVenueManagerAccess}>
+            <NavLink style={{ cursor: "pointer" }}>
+              Venue Manager Dashboard
+            </NavLink>
+          </NavItem>
           <NavItem>
             {isLoggedIn ? (
               <Button color="link" onClick={handleLogout}>
