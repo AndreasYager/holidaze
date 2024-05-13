@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import VenuePage from "./pages/venuepage/VenuePage";
 import MyProfile from "./pages/myprofile/MyProfile";
+import ManageVenues from "./pages/managevenues/ManageVenues";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/venue/:id" element={<VenuePage />} />
           <Route path="/profile" element={<MyProfile />} />
+          <Route path="/venuemanager" element={<ManageVenues />} />
         </Routes>
       </Layout>
     </Router>
