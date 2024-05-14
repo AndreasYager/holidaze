@@ -25,11 +25,28 @@ const Header = () => {
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const getAuthStatus = () => {
     const token = localStorage.getItem("accessToken");
     const venueManager = localStorage.getItem("isVenueManager") === "true";
+    return { token, venueManager };
+  };
+
+  useEffect(() => {
+    const { token, venueManager } = getAuthStatus();
     setIsLoggedIn(!!token);
     setIsVenueManager(venueManager);
+
+    const handleStorageChange = () => {
+      const { token, venueManager } = getAuthStatus();
+      setIsLoggedIn(!!token);
+      setIsVenueManager(venueManager);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   const handleProfileAccess = () => {
@@ -41,16 +58,19 @@ const Header = () => {
   };
 
   const handleVenueManagerAccess = () => {
+    const { token, venueManager } = getAuthStatus();
+    setIsLoggedIn(!!token);
+    setIsVenueManager(venueManager);
+
     if (isLoggedIn && isVenueManager) {
-      navigate("/venuemanager"); 
+      navigate("/venuemanager");
     } else if (isLoggedIn && !isVenueManager) {
-      
       alert(
         "You are not currently set as a venue manager. Please visit your profile page to update your status."
       );
-      navigate("/profile"); 
+      navigate("/profile");
     } else {
-      toggleModal(); 
+      toggleModal();
     }
   };
 

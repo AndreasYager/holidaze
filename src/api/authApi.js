@@ -44,7 +44,7 @@ export async function registerUser(
 
 export async function loginUser(email, password) {
   try {
-    const response = await fetch(`${baseUrl}/auth/login`, {
+    const response = await fetch(`${baseUrl}/auth/login?_holidaze=true`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,6 +61,9 @@ export async function loginUser(email, password) {
         "isVenueManager",
         data.venueManager ? "true" : "false"
       );
+
+      // Dispatch a storage event to notify other components of the update
+      window.dispatchEvent(new Event("storage"));
 
       if (data.avatar) {
         localStorage.setItem("userAvatarUrl", data.avatar.url);

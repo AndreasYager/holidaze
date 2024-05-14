@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import VenueList from "../../components/venuemanager/MyVenues";
 import VenueCreate from "../../components/venuemanager/PostVenue";
+
 const VenueManagerPage = () => {
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem("accessToken")
-  );
+  const [accessToken] = useState(localStorage.getItem("accessToken"));
 
   const handleSelectVenue = (venue) => {
     console.log("Selected Venue:", venue);
