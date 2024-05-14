@@ -18,16 +18,20 @@ const HomePage = () => {
   const [hasMore, setHasMore] = useState(true);
   const [sortOrder, setSortOrder] = useState("desc");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const limit = 12;
   const sort = "name";
 
   useEffect(() => {
     const initFetch = async () => {
+      setIsLoading(true);
       try {
         const venuesData = await fetchVenues(page, limit, sort, sortOrder);
         console.log("Fetched venues data:", venuesData);
         if (Array.isArray(venuesData)) {
-          setVenues((prevVenues) => [...prevVenues, ...venuesData]);
+          setVenues((prevVenues) =>
+            page === 1 ? venuesData : [...prevVenues, ...venuesData]
+          );
           if (venuesData.length < limit) {
             setHasMore(false);
           }
@@ -37,13 +41,17 @@ const HomePage = () => {
         }
       } catch (error) {
         console.error("Failed to load venues:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     initFetch();
   }, [page, sortOrder]);
 
   const loadMore = () => {
-    setPage((prevPage) => prevPage + 1);
+    if (!isLoading) {
+      setPage((prevPage) => prevPage + 1);
+    }
   };
 
   const toggleDropdown = () => {
@@ -73,11 +81,19 @@ const HomePage = () => {
       </Dropdown>
       <Row>
         {Array.isArray(venues) && venues.length > 0 ? (
-          venues.map((venue) => (
-            <Col sm="6" md="4" lg="3" key={venue.id} className="mb-4">
-              <Venue venue={venue} />
-            </Col>
-          ))
+          venues.map((venue, index) => {
+            return (
+              <Col
+                sm="6"
+                md="4"
+                lg="3"
+                key={venue.id || index}
+                className="mb-4"
+              >
+                <Venue venue={venue} />
+              </Col>
+            );
+          })
         ) : (
           <Col>
             <p>No venues available.</p>
@@ -86,7 +102,7 @@ const HomePage = () => {
       </Row>
       {hasMore && (
         <div className="d-flex justify-content-end mt-3">
-          <Button onClick={loadMore} color="primary">
+          <Button onClick={loadMore} color="primary" disabled={isLoading}>
             Load More
           </Button>
         </div>
