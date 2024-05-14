@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
 import placeholderImg from "../../images/placeholder.jpg";
+import "./Venue.css"; 
 
 const Venue = ({ venue }) => {
   const navigate = useNavigate();
@@ -22,11 +23,17 @@ const Venue = ({ venue }) => {
   if (!venue) return <div>Loading...</div>;
 
   return (
-    <Card onClick={handleClick} style={{ cursor: "pointer" }}>
-      <CardImg top src={imgSrc} alt={venue.name} onError={handleImgError} />
+    <Card onClick={handleClick} className="venue-card">
+      <CardImg
+        top
+        src={imgSrc}
+        alt={venue.name}
+        onError={handleImgError}
+        className="venue-image"
+      />
       <CardBody>
         <CardTitle tag="h5">{venue.name}</CardTitle>
-        <CardText>{venue.description}</CardText>
+        <CardText className="venue-description">{venue.description}</CardText>
         <CardText>Price: ${venue.price.toFixed(2)}</CardText>
         <CardText>Max Guests: {venue.maxGuests}</CardText>
         <CardText>Rating: {venue.rating}</CardText>
