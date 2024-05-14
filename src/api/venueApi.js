@@ -1,16 +1,23 @@
 const baseUrl = "https://v2.api.noroff.dev/holidaze";
 
-export const fetchVenues = async () => {
+export const fetchVenues = async (
+  page = 1,
+  limit = 12,
+  sort = "name",
+  sortOrder = "desc"
+) => {
   try {
-    const response = await fetch(`${baseUrl}/venues`);
+    const response = await fetch(
+      `${baseUrl}/venues?page=${page}&limit=${limit}&sort=${sort}&sortOrder=${sortOrder}`
+    );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     const json = await response.json();
-    return json.data; // Return data for use in component
+    return json.data;
   } catch (error) {
     console.error("Failed to fetch venues:", error);
-    return []; // Return an empty array to prevent errors in rendering
+    return [];
   }
 };
 
@@ -21,9 +28,9 @@ export const fetchVenueDetails = async (id) => {
       throw new Error("Network response was not ok");
     }
     const json = await response.json();
-    return json.data; // Return venue data for use in component
+    return json.data;
   } catch (error) {
     console.error("Failed to fetch venue details:", error);
-    return null; // Return null to indicate an error in fetching
+    return null;
   }
 };
