@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import VenuePage from "./pages/venuepage/VenuePage";
 import MyProfile from "./pages/myprofile/MyProfile";
 import ManageVenues from "./pages/managevenues/ManageVenues";
+import "./App.css";
 
 function App() {
   return (
