@@ -112,32 +112,34 @@ const Header = () => {
       <div className="search-bar-container">
         <Search />
       </div>
-      <Collapse isOpen={isMenuOpen} navbar>
-        <Nav className="me-auto" navbar>
-          <NavItem>
-            <NavLink href="/">Home</NavLink>
-          </NavItem>
-          <NavItem onClick={handleProfileAccess}>
-            <NavLink style={{ cursor: "pointer" }}>My Profile</NavLink>
-          </NavItem>
-          <NavItem onClick={handleVenueManagerAccess}>
-            <NavLink style={{ cursor: "pointer" }}>
-              Venue Manager Dashboard
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            {isLoggedIn ? (
-              <Button color="link" onClick={handleLogout}>
-                Logout
-              </Button>
-            ) : (
-              <Button color="link" onClick={toggleModal}>
-                Login
-              </Button>
-            )}
-          </NavItem>
-        </Nav>
-      </Collapse>
+      <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
+        <Collapse isOpen={isMenuOpen} navbar>
+          <Nav navbar>
+            <NavItem>
+              <NavLink href="/">Home</NavLink>
+            </NavItem>
+            <NavItem onClick={handleProfileAccess}>
+              <NavLink style={{ cursor: "pointer" }}>My Profile</NavLink>
+            </NavItem>
+            <NavItem onClick={handleVenueManagerAccess}>
+              <NavLink style={{ cursor: "pointer" }}>
+                Venue Manager Dashboard
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              {isLoggedIn ? (
+                <Button color="link" onClick={handleLogout} className="btn-link">
+                  Logout
+                </Button>
+              ) : (
+                <Button color="link" onClick={toggleModal} className="btn-link">
+                  Login
+                </Button>
+              )}
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </div>
       <AuthModal
         isOpen={isModalOpen}
         toggle={toggleModal}
