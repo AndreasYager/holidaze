@@ -1,3 +1,11 @@
 .booked {
   background-color: #ffcccb; 
+  pointer-events: none; 
+
+}
+
+.past-date {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  pointer-events: none; 
 }

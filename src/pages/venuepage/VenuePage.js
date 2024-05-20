@@ -35,12 +35,20 @@ const VenuePage = () => {
 
   const tileClassName = ({ date, view }) => {
     if (view === "month") {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+
+      if (date < today) {
+        return "past-date";
+      }
+
       for (let booking of bookedDates) {
         if (date >= booking.start && date <= booking.end) {
           return "booked";
         }
       }
     }
+    return null;
   };
 
   const handleDateChange = (range) => {
