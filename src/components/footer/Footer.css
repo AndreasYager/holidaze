@@ -1,0 +1,40 @@
+/* Footer.css */
+
+.footer {
+    background-color: #708d6c; 
+    color: #fff;
+    padding: 2rem 0;
+    border-top: 1px solid #ccc;
+    position: relative;
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .footer-top-bar {
+    background-color: #ff6767; 
+    height: 30px; 
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .footer h5 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .footer p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer .nav-link {
+    color: #fff;
+    padding: 0.2rem 0;
+  }
+  
+  .footer .nav-link:hover {
+    text-decoration: underline;
+  }
+  
