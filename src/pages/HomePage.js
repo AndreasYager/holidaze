@@ -67,9 +67,9 @@ const HomePage = () => {
 
   return (
     <Container>
-      <h1>Our Venues</h1>
+      <h1 className="mb-3 mt-2">Our Venues</h1>
       <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="mb-3">
-        <DropdownToggle caret>Sort Order</DropdownToggle>
+        <DropdownToggle caret color="primary">Sort Order</DropdownToggle>
         <DropdownMenu>
           <DropdownItem onClick={() => handleSortOrderChange("asc")}>
             A to Z
@@ -84,9 +84,9 @@ const HomePage = () => {
           venues.map((venue, index) => {
             return (
               <Col
-                sm="6"
+                sm="12"
                 md="4"
-                lg="3"
+                lg="4"
                 key={venue.id || index}
                 className="mb-4"
               >
