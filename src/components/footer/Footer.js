@@ -27,9 +27,7 @@ const Footer = () => {
               <NavItem>
                 <NavLink href="/venuemanager">Venue Manager Dashboard</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink href="/contact">Contact Us</NavLink>
-              </NavItem>
+              
             </Nav>
           </Col>
           <Col md="3">
