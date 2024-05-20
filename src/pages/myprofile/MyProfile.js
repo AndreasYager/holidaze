@@ -15,13 +15,13 @@ import {
   Label,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-
 import { fetchUserBookings, deleteBooking } from "../../api/userBookingsApi";
 import {
   handleAvatarUpdate,
   handleBannerUpdate,
   handleVenueManagerStatusUpdate,
 } from "../../api/userProfileApi";
+import './MyProfile.css'; 
 
 const Profile = () => {
   const [avatar, setAvatar] = useState(localStorage.getItem("userAvatarUrl"));
@@ -90,6 +90,8 @@ const Profile = () => {
         style={{
           backgroundImage: `url(${banner})`,
           backgroundSize: "cover",
+          width: "90%",
+          margin: "0 auto",
           borderBottomLeftRadius: "20px",
           borderBottomRightRadius: "20px",
         }}
@@ -112,28 +114,33 @@ const Profile = () => {
           <h3 className="mt-4">My Bookings</h3>
           <ListGroup className="mt-4">
             {bookings.map((booking) => (
-              <ListGroupItem key={booking.id}>
-                <img
-                  className="me-3"
-                  src={
-                    booking.venue && booking.venue.media
-                      ? booking.venue.media[0].url
-                      : "/path/to/default-venue-image.jpg"
-                  }
-                  alt="Venue"
-                  style={{ width: "100%", maxWidth: "150px", height: "auto" }}
-                />
-                Booking ID: {booking.id}, Date:{" "}
-                {new Date(booking.dateFrom).toLocaleDateString()} to{" "}
-                {new Date(booking.dateTo).toLocaleDateString()}, Guests:{" "}
-                {booking.guests}, Venue:{" "}
-                {booking.venue ? (
-                  <Link to={`/venue/${booking.venue.id}`}>
-                    {booking.venue.name}
-                  </Link>
-                ) : (
-                  "No Venue Details"
-                )}
+              <ListGroupItem key={booking.id} className="booking-item">
+                <div className="booking-image-container">
+                  <img
+                    className="booking-image"
+                    src={
+                      booking.venue && booking.venue.media
+                        ? booking.venue.media[0].url
+                        : "/path/to/default-venue-image.jpg"
+                    }
+                    alt="Venue"
+                  />
+                </div>
+                <div className="booking-info">
+                  <div>Booking ID: {booking.id}</div>
+                  <div>
+                    Date: {new Date(booking.dateFrom).toLocaleDateString()} to{" "}
+                    {new Date(booking.dateTo).toLocaleDateString()}, Guests:{" "}
+                    {booking.guests}, Venue:{" "}
+                    {booking.venue ? (
+                      <Link to={`/venue/${booking.venue.id}`}>
+                        {booking.venue.name}
+                      </Link>
+                    ) : (
+                      "No Venue Details"
+                    )}
+                  </div>
+                </div>
                 <Button
                   color="danger"
                   size="sm"
