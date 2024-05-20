@@ -11,15 +11,16 @@ const VenueManagerPage = () => {
 
   return (
     <div>
-      <h1>Venue Manager Dashboard</h1>
-      <div>
-        <VenueCreate accessToken={accessToken} />
-      </div>
+      <h1 className="m-4">Venue Manager Dashboard</h1>
+      
       <div>
         <VenueList
           onSelectVenue={handleSelectVenue}
           accessToken={accessToken}
         />
+      </div>
+      <div>
+        <VenueCreate accessToken={accessToken} />
       </div>
     </div>
   );
