@@ -1,0 +1,74 @@
+.venue-create-form {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .venue-create-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .venue-create-form .form-section {
+    margin-bottom: 20px;
+  }
+  
+  .venue-create-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .venue-create-form input[type="text"],
+  .venue-create-form input[type="number"],
+  .venue-create-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .venue-create-form input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .venue-create-form .media-fields {
+    margin-bottom: 10px;
+  }
+  
+  .venue-create-form .error {
+    color: red;
+    font-size: 0.9em;
+  }
+  
+  .venue-create-form button[type="submit"],
+  .venue-create-form button[type="button"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .venue-create-form button[type="button"] {
+    background-color: #6c757d;
+  }
+  
+  .venue-create-form button[type="submit"]:hover,
+  .venue-create-form button[type="button"]:hover {
+    background-color: #0056b3;
+  }
+  
+  .venue-create-form button[type="button"]:hover {
+    background-color: #5a6268;
+  }
+  
