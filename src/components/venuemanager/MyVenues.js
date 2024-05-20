@@ -5,6 +5,8 @@ import {
   updateVenue,
 } from "../../api/manageVenueApi";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
+import placeholderImg from "../../images/placeholder.jpg";
+import "./MyVenues.css"; 
 
 function VenueList({ accessToken }) {
   const [venues, setVenues] = useState([]);
@@ -113,26 +115,45 @@ function VenueList({ accessToken }) {
 
   return (
     <div>
-      <h1>Venues</h1>
+      <h2 className="m-4 mb-0">My Venues</h2>
       {venues.length ? (
-        <ul>
+        <ul className="venue-list">
           {venues.map((venue) => (
-            <li key={venue.id}>
-              {venue.name}
-              <Button
-                color="secondary"
-                onClick={() => handleEdit(venue)}
-                style={{ marginLeft: "10px" }}
-              >
-                Edit
-              </Button>
-              <Button
-                color="danger"
-                onClick={() => handleDelete(venue.id)}
-                style={{ marginLeft: "10px" }}
-              >
-                Delete
-              </Button>
+            <li key={venue.id} className="venue-item">
+              <div className="venue-image-container">
+                <img
+                  src={venue.media?.[0]?.url || placeholderImg}
+                  alt={venue.media?.[0]?.alt || "Venue Image"}
+                  className="venue-image"
+                />
+              </div>
+              <div className="venue-info">
+                <div className="venue-info-content">
+                  <div>
+                    <h3>{venue.name}</h3>
+                    <p>{venue.description}</p>
+                    <p>Price: ${venue.price.toFixed(2)}</p>
+                    <p>Max Guests: {venue.maxGuests}</p>
+                    <p>Rating: {venue.rating}</p>
+                  </div>
+                  <div>
+                    <Button
+                      color="secondary"
+                      onClick={() => handleEdit(venue)}
+                      style={{ marginLeft: "10px" }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      color="danger"
+                      onClick={() => handleDelete(venue.id)}
+                      style={{ marginLeft: "10px" }}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </li>
           ))}
         </ul>
