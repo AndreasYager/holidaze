@@ -8,7 +8,7 @@ import {
   NavbarToggler,
   Button,
 } from "reactstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Header.css";
 import logo from "../../images/holidazelogo.png";
 import userIcon from "../../images/holidazeprofile.png";
@@ -85,6 +85,7 @@ const Header = () => {
     } else {
       console.error("Logout failed:", message);
     }
+    toggleMenu();
   };
 
   const updateLoginStatus = (status) => {
@@ -101,9 +102,9 @@ const Header = () => {
           <NavbarToggler onClick={toggleMenu} className="me-2">
             <img src={hamburgerIcon} alt="Menu" />
           </NavbarToggler>
-          <a href="/" className="navbar-brand">
+          <Link to="/" className="navbar-brand">
             <img src={logo} alt="Holidaze Logo" />
-          </a>
+          </Link>
         </div>
         <NavbarToggler onClick={handleProfileAccess} className="me-2">
           <img src={userIcon} alt="User Icon" style={{ border: "none" }} />
@@ -115,13 +116,13 @@ const Header = () => {
       <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
         <Collapse isOpen={isMenuOpen} navbar>
           <Nav navbar>
-            <NavItem>
-              <NavLink href="/">Home</NavLink>
+            <NavItem onClick={toggleMenu}>
+              <NavLink tag={Link} to="/">Home</NavLink>
             </NavItem>
-            <NavItem onClick={handleProfileAccess}>
+            <NavItem onClick={() => { handleProfileAccess(); toggleMenu(); }}>
               <NavLink style={{ cursor: "pointer" }}>My Profile</NavLink>
             </NavItem>
-            <NavItem onClick={handleVenueManagerAccess}>
+            <NavItem onClick={() => { handleVenueManagerAccess(); toggleMenu(); }}>
               <NavLink style={{ cursor: "pointer" }}>
                 Venue Manager Dashboard
               </NavLink>
