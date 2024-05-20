@@ -124,7 +124,7 @@ function VenueList({ accessToken }) {
                 <img
                   src={venue.media?.[0]?.url || placeholderImg}
                   alt={venue.media?.[0]?.alt || "Venue Image"}
-                  className="venue-image"
+                  className="my-venue-image"
                 />
               </div>
               <div className="venue-info">
