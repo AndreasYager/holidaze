@@ -7,7 +7,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import placeholderImg from "./images/placeholder.jpg";
+import placeholderImg from "../images/placeholder.jpg";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,15 +21,28 @@ const Search = () => {
   useEffect(() => {
     const fetchAllVenues = async () => {
       setIsLoading(true);
+      let page = 1;
+      const limit = 100;
+      let allFetchedVenues = [];
       try {
-        const response = await fetch(
-          "https://v2.api.noroff.dev/holidaze/venues"
-        );
-        if (!response.ok) {
-          throw new Error(`Failed to fetch venues, status: ${response.status}`);
+        while (true) {
+          const response = await fetch(
+            `https://v2.api.noroff.dev/holidaze/venues?limit=${limit}&page=${page}`
+          );
+          if (!response.ok) {
+            throw new Error(
+              `Failed to fetch venues, status: ${response.status}`
+            );
+          }
+          const json = await response.json();
+          const venues = json.data || json;
+          if (venues.length === 0) {
+            break; // Exit loop if no more venues are returned
+          }
+          allFetchedVenues = [...allFetchedVenues, ...venues];
+          page += 1; // Move to the next page
         }
-        const json = await response.json();
-        setAllVenues(json.data || []);
+        setAllVenues(allFetchedVenues);
       } catch (error) {
         setError(`Error fetching all venues: ${error.message}`);
         console.error("Error fetching all venues:", error);

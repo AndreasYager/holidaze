@@ -13,7 +13,7 @@ import "./Header.css";
 import logo from "../../images/holidazelogo.png";
 import userIcon from "../../images/holidazeprofile.png";
 import hamburgerIcon from "../../images/hamburgericon.png";
-import Search from "../../Search";
+import Search from "../Search";
 import AuthModal from "../AuthModal";
 import { logoutUser } from "../../api/authApi";
 
