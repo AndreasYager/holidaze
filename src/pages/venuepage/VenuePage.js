@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  CardImg,
+  CardBody,
+  CardTitle,
+  CardText,
+} from "reactstrap";
 import Calendar from "react-calendar";
 import placeholderImg from "../../images/placeholder.jpg";
 import { fetchVenueDetails } from "../../api/venueApi";
@@ -12,7 +21,10 @@ const VenuePage = () => {
   const { id } = useParams();
   const [venue, setVenue] = useState(null);
   const [bookedDates, setBookedDates] = useState([]);
-  const [selectedDateRange, setSelectedDateRange] = useState([new Date(), new Date()]);
+  const [selectedDateRange, setSelectedDateRange] = useState([
+    new Date(),
+    new Date(),
+  ]);
 
   useEffect(() => {
     const initFetch = async () => {
@@ -20,10 +32,11 @@ const VenuePage = () => {
         const venueData = await fetchVenueDetails(id);
         if (venueData) {
           setVenue(venueData);
-          const bookings = venueData.bookings?.map((booking) => ({
-            start: new Date(new Date(booking.dateFrom).setHours(0, 0, 0, 0)),
-            end: new Date(new Date(booking.dateTo).setHours(23, 59, 59, 999)),
-          })) || [];
+          const bookings =
+            venueData.bookings?.map((booking) => ({
+              start: new Date(new Date(booking.dateFrom).setHours(0, 0, 0, 0)),
+              end: new Date(new Date(booking.dateTo).setHours(23, 59, 59, 999)),
+            })) || [];
           setBookedDates(bookings);
         }
       } catch (error) {
@@ -76,19 +89,22 @@ const VenuePage = () => {
               <CardText>Max Guests: {venue.maxGuests}</CardText>
               <CardText>Rating: {venue.rating}</CardText>
               <CardText>
-                Address: {venue.location.address}, {venue.location.city}, {venue.location.country}
+                Address: {venue.location.address}, {venue.location.city},{" "}
+                {venue.location.country}
               </CardText>
               <CardText>
-                Facilities: Wifi: {venue.meta.wifi ? "Yes" : "No"}, Parking: {venue.meta.parking ? "Yes" : "No"}, Breakfast: {venue.meta.breakfast ? "Yes" : "No"}, Pets Allowed: {venue.meta.pets ? "Yes" : "No"}
+                Amenities: Wifi: {venue.meta.wifi ? "Yes" : "No"}, Parking:{" "}
+                {venue.meta.parking ? "Yes" : "No"}, Breakfast:{" "}
+                {venue.meta.breakfast ? "Yes" : "No"}, Pets Allowed:{" "}
+                {venue.meta.pets ? "Yes" : "No"}
               </CardText>
               <div className="d-flex justify-content-center my-3">
-
-              <Calendar
-                onChange={handleDateChange}
-                value={selectedDateRange}
-                selectRange={true}
-                tileClassName={tileClassName}
-              />
+                <Calendar
+                  onChange={handleDateChange}
+                  value={selectedDateRange}
+                  selectRange={true}
+                  tileClassName={tileClassName}
+                />
               </div>
               <Booking
                 venueId={id}
