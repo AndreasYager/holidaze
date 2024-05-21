@@ -75,7 +75,7 @@ const VenuePage = () => {
   return (
     <Container>
       <Row className="mt-4">
-        <Col md={{ size: 8, offset: 2 }}>
+        <Col md={{ size: 12 }}>
           <Card>
             <CardImg
               top
