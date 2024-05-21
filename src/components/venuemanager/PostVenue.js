@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createVenue } from "../../api/manageVenueApi";
-import "./PostVenue.css"; 
+import "./PostVenue.css";
 
 const VenueCreate = ({ accessToken }) => {
   const initialFormData = {
@@ -63,15 +63,18 @@ const VenueCreate = ({ accessToken }) => {
     if (!formData.name) errors.name = "Name is required";
     if (!formData.description) errors.description = "Description is required";
     if (formData.price <= 0) errors.price = "Price must be greater than zero";
-    if (formData.maxGuests <= 0) errors.maxGuests = "Max Guests must be greater than zero";
+    if (formData.maxGuests <= 0)
+      errors.maxGuests = "Max Guests must be greater than zero";
     formData.media.forEach((item, index) => {
       if (!item.url) errors[`media.${index}.url`] = "Media URL is required";
       if (!item.alt) errors[`media.${index}.alt`] = "Alt text is required";
     });
-    if (!formData.location.address) errors["location.address"] = "Address is required";
+    if (!formData.location.address)
+      errors["location.address"] = "Address is required";
     if (!formData.location.city) errors["location.city"] = "City is required";
     if (!formData.location.zip) errors["location.zip"] = "Zip Code is required";
-    if (!formData.location.country) errors["location.country"] = "Country is required";
+    if (!formData.location.country)
+      errors["location.country"] = "Country is required";
     return errors;
   };
 
@@ -92,8 +95,6 @@ const VenueCreate = ({ accessToken }) => {
       console.error("Error creating venue:", err);
     }
   };
-
-
 
   return (
     <form onSubmit={handleSubmit} className="venue-create-form">
@@ -118,7 +119,9 @@ const VenueCreate = ({ accessToken }) => {
             value={formData.description}
             onChange={handleChange}
           />
-          {formErrors.description && <p className="error">{formErrors.description}</p>}
+          {formErrors.description && (
+            <p className="error">{formErrors.description}</p>
+          )}
         </label>
         <label>
           Price:
@@ -138,7 +141,9 @@ const VenueCreate = ({ accessToken }) => {
             value={formData.maxGuests}
             onChange={handleChange}
           />
-          {formErrors.maxGuests && <p className="error">{formErrors.maxGuests}</p>}
+          {formErrors.maxGuests && (
+            <p className="error">{formErrors.maxGuests}</p>
+          )}
         </label>
       </div>
       <div className="form-section">
@@ -171,10 +176,9 @@ const VenueCreate = ({ accessToken }) => {
             </label>
           </div>
         ))}
-      
       </div>
       <div className="form-section">
-        <h3>Meta Information</h3>
+        <h3>Amenities</h3>
         <label>
           WiFi:
           <input
