@@ -21,7 +21,7 @@ import {
   handleBannerUpdate,
   handleVenueManagerStatusUpdate,
 } from "../../api/userProfileApi";
-import './MyProfile.css'; 
+import "./MyProfile.css";
 
 const Profile = () => {
   const [avatar, setAvatar] = useState(localStorage.getItem("userAvatarUrl"));
@@ -112,60 +112,69 @@ const Profile = () => {
       <Row>
         <Col md="12">
           <h3 className="mt-4">My Bookings</h3>
-          <ListGroup className="mt-4">
+          <ListGroup className="mt-4 bookings-list">
             {bookings.map((booking) => (
               <ListGroupItem key={booking.id} className="booking-item">
-                <div className="booking-image-container">
-                  <img
-                    className="booking-image"
-                    src={
-                      booking.venue && booking.venue.media
-                        ? booking.venue.media[0].url
-                        : "/path/to/default-venue-image.jpg"
-                    }
-                    alt="Venue"
-                  />
-                </div>
-                <div className="booking-info">
-                  <div>Booking ID: {booking.id}</div>
-                  <div>
-                    Date: {new Date(booking.dateFrom).toLocaleDateString()} to{" "}
-                    {new Date(booking.dateTo).toLocaleDateString()}, Guests:{" "}
-                    {booking.guests}, Venue:{" "}
-                    {booking.venue ? (
-                      <Link to={`/venue/${booking.venue.id}`}>
-                        {booking.venue.name}
-                      </Link>
-                    ) : (
-                      "No Venue Details"
-                    )}
+                <div className="booking-content">
+                  <div className="booking-image-container">
+                    <img
+                      className="booking-image"
+                      src={
+                        booking.venue && booking.venue.media
+                          ? booking.venue.media[0].url
+                          : "/path/to/default-venue-image.jpg"
+                      }
+                      alt="Venue"
+                    />
+                  </div>
+                  <div className="booking-info">
+                    <div>Booking ID: {booking.id}</div>
+                    <div>
+                      Date: {new Date(booking.dateFrom).toLocaleDateString()} to{" "}
+                      {new Date(booking.dateTo).toLocaleDateString()}
+                      <div>Guests: {booking.guests}</div>
+                      <div>
+                        Venue:{" "}
+                        {booking.venue ? (
+                          <Link to={`/venue/${booking.venue.id}`}>
+                            {booking.venue.name}
+                          </Link>
+                        ) : (
+                          "No Venue Details"
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <Button
-                  color="danger"
-                  size="sm"
-                  onClick={async () => {
-                    if (
-                      window.confirm(
-                        "Are you sure you want to delete this booking?"
-                      )
-                    ) {
-                      try {
-                        await deleteBooking(booking.id, accessToken);
-                        setBookings((prev) =>
-                          prev.filter((b) => b.id !== booking.id)
-                        );
-                        setError("");
-                        window.location.reload();
-                      } catch (error) {
-                        setError("Failed to delete booking: " + error.message);
+                <div className="booking-actions">
+                  <Button
+                    color="danger"
+                    size="sm"
+                    onClick={async () => {
+                      if (
+                        window.confirm(
+                          "Are you sure you want to delete this booking?"
+                        )
+                      ) {
+                        try {
+                          await deleteBooking(booking.id, accessToken);
+                          setBookings((prev) =>
+                            prev.filter((b) => b.id !== booking.id)
+                          );
+                          setError("");
+                          window.location.reload();
+                        } catch (error) {
+                          setError(
+                            "Failed to delete booking: " + error.message
+                          );
+                        }
                       }
-                    }
-                  }}
-                  style={{ marginLeft: "10px" }}
-                >
-                  Delete
-                </Button>
+                    }}
+                    className="delete-button"
+                  >
+                    Delete
+                  </Button>
+                </div>
               </ListGroupItem>
             ))}
           </ListGroup>
