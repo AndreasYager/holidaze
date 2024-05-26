@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createVenue } from "../../api/manageVenueApi";
 import "./PostVenue.css";
 
-const VenueCreate = ({ accessToken }) => {
+const VenueCreate = ({ accessToken, onVenueCreated }) => {
   const initialFormData = {
     name: "",
     description: "",
@@ -86,8 +86,9 @@ const VenueCreate = ({ accessToken }) => {
       return;
     }
     try {
-      await createVenue(formData, accessToken);
+      const createdVenue = await createVenue(formData, accessToken);
       alert("Venue created successfully!");
+      onVenueCreated(createdVenue);
       setFormData(initialFormData);
       setFormErrors({});
     } catch (err) {
