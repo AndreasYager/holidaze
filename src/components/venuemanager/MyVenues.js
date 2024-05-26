@@ -6,10 +6,9 @@ import {
 } from "../../api/manageVenueApi";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import placeholderImg from "../../images/placeholder.jpg";
-import VenueCreate from "./PostVenue";
 import "./MyVenues.css";
 
-function VenueList({ accessToken, onSelectVenue }) {
+function VenueList({ accessToken }) {
   const [venues, setVenues] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentVenue, setCurrentVenue] = useState(null);
@@ -114,10 +113,6 @@ function VenueList({ accessToken, onSelectVenue }) {
     }
   };
 
-  const handleVenueCreated = (newVenue) => {
-    setVenues((prevVenues) => [...prevVenues, newVenue]);
-  };
-
   return (
     <div>
       <h2 className="m-4 mb-0">My Venues</h2>
@@ -137,9 +132,7 @@ function VenueList({ accessToken, onSelectVenue }) {
                   <div>
                     <h3>{venue.name}</h3>
                     <p>{venue.description}</p>
-                    <p>
-                      Price: ${venue.price ? venue.price.toFixed(2) : "N/A"}
-                    </p>
+                    <p>Price: ${venue.price.toFixed(2)}</p>
                     <p>Max Guests: {venue.maxGuests}</p>
                     <p>Rating: {venue.rating}</p>
                   </div>
@@ -167,10 +160,6 @@ function VenueList({ accessToken, onSelectVenue }) {
       ) : (
         <p>No venues found.</p>
       )}
-      <VenueCreate
-        accessToken={accessToken}
-        onVenueCreated={handleVenueCreated}
-      />
       <Modal isOpen={isModalOpen} toggle={() => setIsModalOpen(false)}>
         <ModalHeader toggle={() => setIsModalOpen(false)}>
           Edit Venue
