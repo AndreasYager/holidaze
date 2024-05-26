@@ -162,7 +162,6 @@ const Profile = () => {
                             prev.filter((b) => b.id !== booking.id)
                           );
                           setError("");
-                          window.location.reload();
                         } catch (error) {
                           setError(
                             "Failed to delete booking: " + error.message
