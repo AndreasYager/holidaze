@@ -88,7 +88,6 @@ const VenueCreate = ({ accessToken }) => {
     try {
       await createVenue(formData, accessToken);
       alert("Venue created successfully!");
-      window.location.reload();
       setFormData(initialFormData);
       setFormErrors({});
     } catch (err) {
