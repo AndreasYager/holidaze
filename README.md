@@ -42,16 +42,16 @@ A registered user may logout
    git clone https://github.com/andreasyager/holidaze.git
 
 2. Navigate to the Project Directory
-   cd holidaze
+   -cd holidaze
 
 3. Install Dependencies
-npm install
+-npm install
 # or
 yarn install
 
 # Running the Application Locally
 Start the Development Server:
-npm start
+-npm start
 # or
 yarn start
 
