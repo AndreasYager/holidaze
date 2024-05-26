@@ -44,7 +44,7 @@ This project showcases the culmination of skills and knowledge acquired over two
 
 3. **Install Dependencies**
 -npm install
-# or
+or
 yarn install
 
 # Running the Application Locally
