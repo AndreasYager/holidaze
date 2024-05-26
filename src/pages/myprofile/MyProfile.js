@@ -83,6 +83,18 @@ const Profile = () => {
     }
   };
 
+  const handleDeleteBooking = async (bookingId) => {
+    if (window.confirm("Are you sure you want to delete this booking?")) {
+      try {
+        await deleteBooking(bookingId, accessToken);
+        setBookings((prev) => prev.filter((b) => b.id !== bookingId));
+        setError("");
+      } catch (error) {
+        setError("Failed to delete booking: " + error.message);
+      }
+    }
+  };
+
   return (
     <Container fluid>
       <Row
@@ -150,25 +162,7 @@ const Profile = () => {
                   <Button
                     color="danger"
                     size="sm"
-                    onClick={async () => {
-                      if (
-                        window.confirm(
-                          "Are you sure you want to delete this booking?"
-                        )
-                      ) {
-                        try {
-                          await deleteBooking(booking.id, accessToken);
-                          setBookings((prev) =>
-                            prev.filter((b) => b.id !== booking.id)
-                          );
-                          setError("");
-                        } catch (error) {
-                          setError(
-                            "Failed to delete booking: " + error.message
-                          );
-                        }
-                      }
-                    }}
+                    onClick={() => handleDeleteBooking(booking.id)}
                     className="delete-button"
                   >
                     Delete
