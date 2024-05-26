@@ -25,6 +25,7 @@ const VenuePage = () => {
     new Date(),
     new Date(),
   ]);
+  const [imgSrc, setImgSrc] = useState(placeholderImg);
 
   useEffect(() => {
     const initFetch = async () => {
@@ -32,6 +33,7 @@ const VenuePage = () => {
         const venueData = await fetchVenueDetails(id);
         if (venueData) {
           setVenue(venueData);
+          setImgSrc(venueData.media?.[0]?.url || placeholderImg);
           const bookings =
             venueData.bookings?.map((booking) => ({
               start: new Date(new Date(booking.dateFrom).setHours(0, 0, 0, 0)),
@@ -45,6 +47,10 @@ const VenuePage = () => {
     };
     initFetch();
   }, [id]);
+
+  const handleImgError = () => {
+    setImgSrc(placeholderImg);
+  };
 
   const tileClassName = ({ date, view }) => {
     if (view === "month") {
@@ -79,8 +85,9 @@ const VenuePage = () => {
           <Card>
             <CardImg
               top
-              src={venue.media?.[0]?.url || placeholderImg}
+              src={imgSrc}
               alt={venue.media?.[0]?.alt || "Venue Image"}
+              onError={handleImgError}
             />
             <CardBody>
               <CardTitle tag="h5">{venue.name}</CardTitle>

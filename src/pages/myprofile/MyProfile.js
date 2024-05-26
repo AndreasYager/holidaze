@@ -22,6 +22,7 @@ import {
   handleVenueManagerStatusUpdate,
 } from "../../api/userProfileApi";
 import "./MyProfile.css";
+import placeholderImg from "../../images/placeholder.jpg";
 
 const Profile = () => {
   const [avatar, setAvatar] = useState(localStorage.getItem("userAvatarUrl"));
@@ -29,6 +30,7 @@ const Profile = () => {
   const [newAvatarUrl, setNewAvatarUrl] = useState("");
   const [newBannerUrl, setNewBannerUrl] = useState("");
   const [bookings, setBookings] = useState([]);
+  const [bookingImages, setBookingImages] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [error, setError] = useState("");
   const [isVenueManager, setIsVenueManager] = useState(
@@ -42,6 +44,17 @@ const Profile = () => {
       fetchUserBookings(username, accessToken, setBookings, setError);
     }
   }, [username, accessToken]);
+
+  useEffect(() => {
+    const initialBookingImages = bookings.reduce((acc, booking) => {
+      acc[booking.id] =
+        booking.venue && booking.venue.media
+          ? booking.venue.media[0].url
+          : placeholderImg;
+      return acc;
+    }, {});
+    setBookingImages(initialBookingImages);
+  }, [bookings]);
 
   const toggleModal = () => {
     setError("");
@@ -95,6 +108,13 @@ const Profile = () => {
     }
   };
 
+  const handleImgError = (bookingId) => {
+    setBookingImages((prev) => ({
+      ...prev,
+      [bookingId]: placeholderImg,
+    }));
+  };
+
   return (
     <Container fluid>
       <Row
@@ -131,12 +151,9 @@ const Profile = () => {
                   <div className="booking-image-container">
                     <img
                       className="booking-image"
-                      src={
-                        booking.venue && booking.venue.media
-                          ? booking.venue.media[0].url
-                          : "/path/to/default-venue-image.jpg"
-                      }
+                      src={bookingImages[booking.id]}
                       alt="Venue"
+                      onError={() => handleImgError(booking.id)}
                     />
                   </div>
                   <div className="booking-info">
