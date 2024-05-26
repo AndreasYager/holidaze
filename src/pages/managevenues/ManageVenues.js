@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import VenueList from "../../components/venuemanager/MyVenues";
+import VenueCreate from "../../components/venuemanager/PostVenue";
 
 const VenueManagerPage = () => {
   const [accessToken] = useState(localStorage.getItem("accessToken"));
@@ -17,6 +18,9 @@ const VenueManagerPage = () => {
           onSelectVenue={handleSelectVenue}
           accessToken={accessToken}
         />
+      </div>
+      <div>
+        <VenueCreate accessToken={accessToken} />
       </div>
     </div>
   );
