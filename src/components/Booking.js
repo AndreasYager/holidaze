@@ -108,7 +108,9 @@ const Booking = ({ venueId, venueName, dateFrom, dateTo }) => {
             min="1"
           />
         </label>
-        <button type="submit">Book Now</button>
+        <button type="submit" class="btn btn-primary">
+          Book Now
+        </button>
       </form>
       <ConfirmationModal
         isOpen={modalOpen}
