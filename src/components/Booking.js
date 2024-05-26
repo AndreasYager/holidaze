@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "./ConfirmationModal";
 import generateApiKey from "../api/authApi";
 
@@ -8,6 +9,8 @@ const Booking = ({ venueId, venueName, dateFrom, dateTo }) => {
   const [bookingDetails, setBookingDetails] = useState({});
   const [apiKey, setApiKey] = useState("");
   const [bookingSuccess, setBookingSuccess] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setModalOpen(false);
@@ -48,9 +51,9 @@ const Booking = ({ venueId, venueName, dateFrom, dateTo }) => {
 
   useEffect(() => {
     if (!modalOpen && bookingSuccess) {
-      window.location.reload();
+      navigate("/profile");
     }
-  }, [modalOpen, bookingSuccess]);
+  }, [modalOpen, bookingSuccess, navigate]);
 
   const adjustDateForTimezone = (date) => {
     const userDate = new Date(date);
@@ -108,7 +111,7 @@ const Booking = ({ venueId, venueName, dateFrom, dateTo }) => {
             min="1"
           />
         </label>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Book Now
         </button>
       </form>
