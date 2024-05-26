@@ -40,16 +40,16 @@ This project showcases the culmination of skills and knowledge acquired over two
    git clone https://github.com/andreasyager/holidaze.git
 
 2. **Navigate to the Project Directory**
-   -cd holidaze
+   - cd holidaze
 
 3. **Install Dependencies**
--npm install
+- npm install
 or
 yarn install
 
 # Running the Application Locally
 **Start the Development Server:**
--npm start
-# or
+- npm start
+or
 yarn start
 
